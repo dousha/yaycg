@@ -1,0 +1,18 @@
+$id:
+    name:dummy
+    type:%1
+    data_type:%2
+    amount:1
+    isEnabled:true
+    listy:LIST
+
+----------
+
+%1
+ENUM_ELEMENT_1
+ENUM_ELEMENT_2
+
+%2
+STR
+INT
+COCA_COLA
