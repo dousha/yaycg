@@ -13,15 +13,13 @@
 
 using namespace std;
 
-enum type{
-	STRING,
-	LIST,
-	NUMBER,
-	BOOL
-};
-
 string trim(const string& str){
 	return str.substr(str.find_first_not_of(" "), str.find_last_not_of(" "));
+}
+
+string removeComment(const string& str){
+	if(str.find_last_of("#") == string::npos) return str;
+	else return str.substr(0, str.find_last_of("#"));
 }
 
 string leftPart(const string& str){
@@ -94,12 +92,18 @@ int main(int argc, char** argv){
 			}
 		}
 		else{
-			bufferedTemplate.push_back(curLine);
+			if(!curLine.empty())
+				if(trim(curLine)[0] != '#') // ignore comment lines
+					bufferedTemplate.push_back(removeComment(curLine));
+				else
+					;
+			else
+				bufferedTemplate.push_back(curLine);
 		}
 	}
 
 	// now everything is in memory
-	// load everything may cause some problem on low-ends
+	// loading everything may cause some problem on low-ends
 	file.close();
 
 	// then jump into fill the blank mode

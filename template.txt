@@ -1,5 +1,6 @@
+# i'm not a part of content
 $id:
-    name:dummy
+    name:dummy # neither me!
     type:%1
     data_type:%2
     amount:1
