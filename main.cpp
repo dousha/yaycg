@@ -1,9 +1,24 @@
 /**
  * main.cpp
  **
- * Main application for ConfigMe, YAML configuation generator
- * Copyright (c) dousha@github.com
- * Licensed under GPLv3.
+ * Main application for yaycg, Yet Another YAML Configuration Generator
+ **  
+ *  Copyright (c) 2016 dsstudio
+ *
+ *  This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ **
  */
 
 #include <iostream>
@@ -14,7 +29,8 @@
 using namespace std;
 
 string trim(const string& str){
-	return str.substr(str.find_first_not_of(" "), str.find_last_not_of(" "));
+	return str.substr(
+			str.find_first_not_of(" "), str.find_last_not_of(" "));
 }
 
 string removeComment(const string& str){
@@ -42,6 +58,15 @@ int main(int argc, char** argv){
 	vector<string> bufferedTemplate;
 	int curId;
 	
+	// copyrights. Ugh...
+	cout << "yaycg version 0.2, Copyright (C) 2016 dsstudio" << endl;
+	cout << "yaycg comes with ABSOLUTELY NO WARRANTY. ";
+	cout << "For details please check the LICENSE in the ";
+	cout << "source code directory." << endl;
+	cout << "This is free software, and you are free to copy, modify and ";
+	cout << "redistribute it under certain conditions. For details please ";
+	cout << "check the LICENSE in the source code directory." << endl;
+
 	if(argc > 1){
 		// assuming argv[0] is target template
 		cout << "Using " << argv[0] << " as template" << endl;
@@ -226,5 +251,6 @@ int main(int argc, char** argv){
 	}
 
 	cout << buffer << endl;
-	cout << "File wrote." << endl;
+	cout << "File has been written to config.yml." << endl;
 }
+
