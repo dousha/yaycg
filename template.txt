@@ -1,11 +1,11 @@
 # i'm not a part of content
 $id:
-    name:dummy # neither me!
-    type:%1
-    data_type:%2
-    amount:1
-    isEnabled:true
-    listy:LIST
+	name:dummy # neither me!
+	type:%1
+	data_type:%2
+	amount:1
+	isEnabled:true
+	listy:LIST
 
 ----------
 

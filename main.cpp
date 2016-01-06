@@ -28,23 +28,38 @@
 
 using namespace std;
 
-string trim(const string& str){
-	return str.substr(
-			str.find_first_not_of(" "), str.find_last_not_of(" "));
-}
-
-string removeComment(const string& str){
+inline string removeComment(const string& str){
 	if(str.find_last_of("#") == string::npos) return str;
 	else return str.substr(0, str.find_last_of("#"));
 }
 
-string leftPart(const string& str){
+inline string convertTab(const string& str){
+	string s("");
+	for(size_t i = 0; i < str.size(); i++){
+		if(str[i] == '\t'){
+			s.append(4u, ' ');
+		}
+		else
+			s.append(1u, str[i]);
+	}
+	return s;
+}
+
+inline string trim(const string& str){
+	string s = convertTab(str);
+	return s.substr(
+			s.find_first_not_of(" "),
+			s.find_last_not_of(" ")
+			);
+}
+
+inline string leftPart(const string& str){
 	/// warning: this is NOT a general function
 	/// splitor is `:`
 	return str.substr(0, str.find_first_of(":"));
 }
 
-string rightPart(const string& str){
+inline string rightPart(const string& str){
 	/// warning: this is NOT a general function
 	/// splitor is `:`
 	return str.substr(str.find_first_of(":") + 1);
@@ -57,14 +72,15 @@ int main(int argc, char** argv){
 	vector<vector<string>*> enumList;
 	vector<string> bufferedTemplate;
 	int curId;
-	
+	bool hasTabKey = false;
+
 	// copyrights. Ugh...
 	cout << "yaycg version 0.2, Copyright (C) 2016 dsstudio" << endl;
-	cout << "yaycg comes with ABSOLUTELY NO WARRANTY. ";
+	cout << "yaycg comes with ABSOLUTELY NO WARRANTY." << endl;
 	cout << "For details please check the LICENSE in the ";
 	cout << "source code directory." << endl;
-	cout << "This is free software, and you are free to copy, modify and ";
-	cout << "redistribute it under certain conditions. For details please ";
+	cout << "This is free software, and you are free to copy, modify and " << endl;
+	cout << "redistribute it under certain conditions. For details please " << endl;
 	cout << "check the LICENSE in the source code directory." << endl;
 
 	if(argc > 1){
@@ -92,6 +108,12 @@ int main(int argc, char** argv){
 	while(file.good() && !file.eof()){
 		string curLine;
 		getline(file, curLine);
+		if(!hasTabKey && curLine.find_first_of("\t") != string::npos){
+			hasTabKey = true;
+			cout << "Warning: your template has \\t" << endl;
+			cout << "Please do NOT mix \\t and space." << endl;
+			cout << "Every \\t would be converted to 4 spaces." << endl;
+		}
 		if(curLine == "----------"){
 			// enum area start
 			inEnumArea = true;
@@ -117,11 +139,14 @@ int main(int argc, char** argv){
 			}
 		}
 		else{
-			if(!curLine.empty())
-				if(trim(curLine)[0] != '#') // ignore comment lines
+			if(hasTabKey)
+				curLine = convertTab(curLine);
+			if(!curLine.empty()){
+				if(trim(curLine)[0] != '#'){ // ignore comment lines
 					bufferedTemplate.push_back(removeComment(curLine));
-				else
+				}else
 					;
+			}
 			else
 				bufferedTemplate.push_back(curLine);
 		}
