@@ -30,7 +30,7 @@ using namespace std;
 
 inline string removeComment(const string& str){
 	if(str.find_last_of("#") == string::npos) return str;
-	else return str.substr(0, str.find_last_of("#"));
+	else return str.substr(0, str.find_first_of("#"));
 }
 
 inline string convertTab(const string& str){
@@ -99,7 +99,7 @@ int main(int argc, char** argv){
 	
 	ifstream file(curTemplate.c_str());
 	if(file.fail()){
-		cout << "WTF, man, I cannot read this file. (Permissions problem?)" <<
+		cout << "Cannot read template file. (Permissions problem?)" <<
 		endl;
 	}
 
@@ -277,5 +277,7 @@ int main(int argc, char** argv){
 
 	cout << buffer << endl;
 	cout << "File has been written to config.yml." << endl;
+
+	return 0;
 }
 
